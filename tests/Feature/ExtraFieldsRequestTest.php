@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use Illuminate\Support\Facades\Route;
+use Laravel\ExtraFieldsValidator\ExtraValidatorDataSource;
 use Tests\Fakes\FakeController;
 use Tests\TestCase;
 
@@ -14,7 +15,8 @@ class ExtraFieldsRequestTest extends TestCase
     {
         parent::setUp();
 
-        Route::post('/testing', FakeController::class.'@store')->name('testing');
+        Route::get('/testing', FakeController::class.'@index')->name('testing.index');
+        Route::post('/testing', FakeController::class.'@store')->name('testing.store');
     }
 
     /**
@@ -25,12 +27,70 @@ class ExtraFieldsRequestTest extends TestCase
      */
     public function testItShouldValidateExtraFields(array $payload, int $status, ?string $field = null)
     {
-        $response = $this->json('POST', route('testing'), $payload)
+        $response = $this->json('POST', route('testing.store'), $payload)
             ->assertStatus($status);
 
         if (!is_null($field)) {
             $response->assertJsonValidationErrors($field);
         }
+    }
+
+    public function testItShouldValidateExtraFieldsFromQueryWithDefaultDataSource()
+    {
+        $payload = [
+            'users' => [
+                [
+                    'first_name' => 'John',
+                    'last_name' => 'Doe',
+                    'stores' => [
+                        ['name' => 'Apple Store'],
+                    ],
+                ],
+            ],
+        ];
+
+        config()->set('extra-validator.data_source', ExtraValidatorDataSource::DEFAULT);
+
+        $this->json('POST', route('testing.store', ['hello' => 'world']), $payload)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('hello');
+    }
+
+    public function testItShouldNotValidateExtraFieldsFromQueryWithInputSource()
+    {
+        $payload = [
+            'users' => [
+                [
+                    'first_name' => 'John',
+                    'last_name' => 'Doe',
+                    'stores' => [
+                        ['name' => 'Apple Store'],
+                    ],
+                ],
+            ],
+        ];
+
+        config()->set('extra-validator.data_source', ExtraValidatorDataSource::INPUT_SOURCE);
+
+        $this->json('POST', route('testing.store', ['hello' => 'world']), $payload)
+            ->assertStatus(200);
+    }
+
+    public function testItShouldValidateExtraFieldsFromQueryWithDefaultDataSourceForGetMethods()
+    {
+        config()->set('extra-validator.data_source', ExtraValidatorDataSource::DEFAULT);
+
+        $this->json('GET', route('testing.index', ['hello' => 'world']))
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('hello');
+    }
+
+    public function testItShouldNotValidateExtraFieldsFromQueryWithInputSourceForGetMethod()
+    {
+        config()->set('extra-validator.data_source', ExtraValidatorDataSource::INPUT_SOURCE);
+
+        $this->json('GET', route('testing.index', ['hello' => 'world']))
+            ->assertStatus(200);
     }
 
     public function extraFieldsDataProvider()

@@ -37,6 +37,12 @@ You can install the package via composer:
 $ composer require tzurbaev/laravel-extra-fields-validator
 ```
 
+Also you can publish package configuration:
+
+```bash
+php artisan vendor:publish --provider="Laravel\ExtraFieldsValidator\ExtraFieldsValidatorServiceProvider"
+```
+
 ## Usage
 
 Let's say you have the following request:
@@ -118,6 +124,26 @@ You need to add message to your `validation.php` language file (under the `custo
 name will be passed as `:attribute` replacement.
 
 You can also override `ExtraFormRequest::getExtraFieldErrorMessage` method and return any custom message.
+
+### Data source
+
+By default validator uses Laravel's `FormRequest::validationData()` method to retrieve data that should
+be validated. If you have request with no validation rules or your route can accept optional query
+params, this might lead to unexpected validation errors, since optional query params might be missing
+from your `rules` array.
+
+You have 2 options to deal with this:
+
+1. Describe optional params in your `rules` method. This will not break your requests with optional
+query params but if there's any other non-described param, you will face validation exception;
+2. Change the `extra-validator.data_source` (or ENV variable `EXTRA_VALIDATOR_DATA_SOURCE`) value 
+from `default` to `input_source`. This will instruct validator only to use JSON/Request data without
+query params.
+
+#### GET requests
+
+In most cases you should not use `ExtraFormRequest` for your GET routes. If you really need it,
+describe all available params in your `rules` method.
 
 ## Changelog
 

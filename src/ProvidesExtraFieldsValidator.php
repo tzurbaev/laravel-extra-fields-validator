@@ -16,7 +16,7 @@ trait ProvidesExtraFieldsValidator
         /** @var ValidationFactory $factory */
         $factory = $this->container->make(ValidationFactory::class);
         $rules = method_exists($this, 'rules') ? $this->container->call([$this, 'rules']) : [];
-        $data = $this->validationData();
+        $data = $this->getExtraFieldsValidationData();
 
         /** @var Validator $validator */
         $validator = $factory->make($data, $rules, $this->messages(), $this->attributes());
@@ -37,6 +37,16 @@ trait ProvidesExtraFieldsValidator
 
             return false;
         });
+    }
+
+    protected function getExtraFieldsValidationData()
+    {
+        switch (config('extra-validator.data_source', ExtraValidatorDataSource::DEFAULT)) {
+            case ExtraValidatorDataSource::INPUT_SOURCE:
+                return $this->getInputSource()->all();
+            default:
+                return $this->validationData();
+        }
     }
 
     public function getExtraFieldErrorMessage(string $field): string

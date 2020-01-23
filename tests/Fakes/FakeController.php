@@ -6,6 +6,13 @@ namespace Tests\Fakes;
 
 class FakeController
 {
+    public function index(FakeEmptyRequest $request)
+    {
+        return response()->json([
+            'data' => $request->all(),
+        ]);
+    }
+
     public function store(FakeRequest $request)
     {
         return response()->json([
