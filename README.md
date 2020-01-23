@@ -107,6 +107,11 @@ class StoreUserRequest extends ExtraFormRequest
 }
 ```
 
+### Using custom form request
+
+If you're using custom `FormRequest` class and can't extend from `ExtraFormRequest`, you can include
+`Laravel\ExtraFieldsValidator\ProvidesExtraFieldsValidator` trait into your base/child class.
+
 ### Error message
 
 You need to add message to your `validation.php` language file (under the `custom.extra_field` path). The extra field
