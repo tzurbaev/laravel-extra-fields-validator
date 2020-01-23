@@ -34,10 +34,23 @@ class ExtraFieldsDetector
             }
         });
 
-        $diff = array_keys(
-            array_diff($original, Arr::dot($filtered))
-        );
+        $dottedFiltered = Arr::dot($filtered);
 
-        return $diff[0] ?? null;
+        if (empty($dottedFiltered) && !empty($original)) {
+            return array_key_first($original);
+        }
+
+        return $this->getFirstMissingField($original, $dottedFiltered);
+    }
+
+    private function getFirstMissingField(array $original, array $filtered): ?string
+    {
+        foreach ($original as $field => $value) {
+            if (!empty($value) && !array_key_exists($field, $filtered)) {
+                return $field;
+            }
+        }
+
+        return null;
     }
 }

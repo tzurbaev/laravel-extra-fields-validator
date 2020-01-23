@@ -25,6 +25,8 @@ class FakeRequest extends ExtraFormRequest
             ],
             'users.*.stores' => 'required|array',
             'users.*.stores.*.name' => 'required|string|max:255',
+            'users.*.stores.*.members' => 'nullable|array',
+            'users.*.stores.*.members.*.full_name' => 'requried|string|max:255',
         ];
     }
 }

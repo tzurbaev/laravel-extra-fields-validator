@@ -232,6 +232,23 @@ class ExtraFieldsRequestTest extends TestCase
                 'status' => 422,
                 'field' => 'users.99.age',
             ],
+            [
+                'payload' => [
+                    'users' => [
+                        [
+                            'first_name' => 'John',
+                            'last_name' => 'Doe',
+                            'stores' => [
+                                [
+                                    'name' => 'Apple Store',
+                                    'members' => [],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'status' => 200,
+            ],
         ];
     }
 }
