@@ -1,6 +1,6 @@
 # Laravel Extra Fields Validator
 
-[![Build Status][ico-travis]][link-travis]
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tzurbaev/laravel-extra-fields-validator/test?label=Tests)
 [![StyleCI][ico-styleci]][link-styleci]
 [![ScrutinizerCI][ico-scrutinizer]][link-scrutinizer]
 [![Latest Version on Packagist][ico-version]][link-packagist]
@@ -169,12 +169,10 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 [ico-version]: https://poser.pugx.org/tzurbaev/laravel-extra-fields-validator/version?format=flat
 [ico-license]: https://poser.pugx.org/tzurbaev/laravel-extra-fields-validator/license?format=flat
-[ico-travis]: https://api.travis-ci.org/tzurbaev/laravel-extra-fields-validator.svg?branch=master
 [ico-styleci]: https://styleci.io/repos/235513097/shield?branch=master&style=flat
 [ico-scrutinizer]: https://scrutinizer-ci.com/g/tzurbaev/laravel-extra-fields-validator/badges/quality-score.png?b=master
 
 [link-packagist]: https://packagist.org/packages/tzurbaev/laravel-extra-fields-validator
-[link-travis]: https://travis-ci.org/tzurbaev/laravel-extra-fields-validator
 [link-styleci]: https://styleci.io/repos/235513097
 [link-scrutinizer]: https://scrutinizer-ci.com/g/tzurbaev/laravel-extra-fields-validator/
 [link-author]: https://github.com/tzurbaev
