@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.4] - 2021-07-08
+
+### Fixed
+
+- Allow PHP 8.0.
+
 ## [1.0.3] - 2020-01-23
 
 ### Fixed
@@ -28,6 +34,7 @@ another classes still can have extra fields validation.
 
 Initial release
 
+[1.0.4]: https://github.com/tzurbaev/laravel-extra-fields-validator/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/tzurbaev/laravel-extra-fields-validator/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/tzurbaev/laravel-extra-fields-validator/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/tzurbaev/laravel-extra-fields-validator/compare/1.0.0...1.0.1
